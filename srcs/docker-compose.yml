@@ -1,0 +1,61 @@
+services:
+  mariadb:
+    container_name: mariadb
+    image: "mariadb:alpine20"
+    build:
+      context: requirements/mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - yrhiba42fr_network
+    env_file:
+      - .env
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    image: "wordpress:alpine20"
+    build:
+      context: requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - yrhiba42fr_network
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    restart: always
+
+  nginx:
+    container_name: nginx
+    image: "nginx:alpine20"
+    build:
+      context: requirements/nginx
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - yrhiba42fr_network
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    restart: always
+
+networks:
+  yrhiba42fr_network:
+    driver: bridge
+
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yrhiba/data/wordpress
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yrhiba/data/mariadb
