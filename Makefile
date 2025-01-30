@@ -1,4 +1,4 @@
-VOLUME_PATH = /home/yrhiba/data
+VOLUME_PATH = ~/data
 WORDPRESS_VOLUME = $(VOLUME_PATH)/wordpress
 MARIADB_VOLUME = $(VOLUME_PATH)/mariadb
 
