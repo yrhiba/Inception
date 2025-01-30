@@ -52,10 +52,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/yrhiba/data/wordpress
+      device: ~/data/wordpress # make sure to change it to your absolute relative path data dir
   mariadb_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/yrhiba/data/mariadb
+      device: ~/data/mariadb # make sure to change it to your absolute relative path data dir
